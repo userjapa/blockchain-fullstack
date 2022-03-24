@@ -1,0 +1,20 @@
+{
+  "name": "blockchain-fullstack",
+  "version": "1.0.0",
+  "description": "Blockchain Fullstack",
+  "main": "index.js",
+  "repository": "https://github.com/userjapa/blockchain-fullstack.git",
+  "author": "userjapa <willian.hsimabukuro@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "uuid": "^8.3.2"
+  }
+}
