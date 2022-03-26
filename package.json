@@ -15,6 +15,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "crypto": "^1.0.1",
     "uuid": "^8.3.2"
   }
 }
