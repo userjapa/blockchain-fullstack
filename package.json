@@ -8,14 +8,24 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "start": "node ./",
+    "dev": "nodemon ./",
+    "dev:peer": "cross-env GENERATE_PEER_PORT='true' nodemon ./"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^27.5.1",
     "nodemon": "^2.0.15"
   },
   "dependencies": {
     "crypto": "^1.0.1",
+    "elliptic": "^6.5.4",
+    "express": "^4.17.3",
+    "hex-to-binary": "^1.0.1",
+    "pubnub": "^5.0.1",
+    "redis": "^4.0.4",
+    "request": "^2.88.2",
     "uuid": "^8.3.2"
   }
 }
