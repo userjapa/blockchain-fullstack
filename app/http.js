@@ -1,10 +1,11 @@
 const express = require('express'),
       request = require('request')
 
-const Blockchain      = require('../blockchain'),
-      Wallet          = require('../wallet'),
-      TransactionPool = require('../wallet/transaction-pool'),
-      PubSub          = require('../pubsub')
+const Blockchain       = require('../blockchain'),
+      Wallet           = require('../wallet'),
+      TransactionPool  = require('../wallet/transaction-pool'),
+      TransactionMiner = require('../wallet/transaction-miner'),
+      PubSub           = require('../pubsub')
 
 const {
   HTTP_PORT,
@@ -15,14 +16,20 @@ const {
 
 class HttpServer {
   constructor () {
-    this.app             = express()
+    this.app = express()
 
-    this.blockchain      = new Blockchain()
-    this.wallet          = new Wallet()
-    this.transactionPool = new TransactionPool()
-    this.pubsub          = new PubSub({
+    this.blockchain       = new Blockchain()
+    this.wallet           = new Wallet()
+    this.transactionPool  = new TransactionPool()
+    this.pubsub           = new PubSub({
       blockchain: this.blockchain,
       transactionPool: this.transactionPool
+    })
+    this.transactionMiner = new TransactionMiner({
+      blockchain: this.blockchain,
+      transactionPool: this.transactionPool,
+      wallet: this.wallet,
+      pubsub: this.pubsub
     })
 
     this.port            = HTTP_PORT
@@ -70,10 +77,19 @@ class HttpServer {
       })
 
       try {
-        if (transaction)
-          transaction.update({ senderWallet: this.wallet, recipient, amount })
-        else
-          transaction = this.wallet.createTransaction({ recipient, amount })
+        if (transaction) {
+          transaction.update({
+            senderWallet: this.wallet,
+            recipient,
+            amount
+          })
+        } else {
+          transaction = this.wallet.createTransaction({
+            recipient,
+            amount,
+            chain: this.blockchain.chain
+          })
+        }
       } catch (error) {
         return res.status(400).json({ type: RESPONSE_TYPES.ERROR, message: error.message })
       }
@@ -94,6 +110,27 @@ class HttpServer {
       res.json({
         type: RESPONSE_TYPES.SUCCESS,
         data: this.transactionPool.transactionMap
+      })
+    })
+
+    apiRoute.get('/mine-transactions', (req, res) => {
+      this.transactionMiner.mineTransactions()
+
+      res.redirect('/api/blocks')
+    })
+
+    apiRoute.get('/wallet-info', (req, res) => {
+      const address = this.wallet.publicKey
+
+      res.json({
+        type: RESPONSE_TYPES.SUCCESS,
+        data: {
+          address,
+          balance: Wallet.calculateBalance({
+            chain: this.blockchain.chain,
+            address
+          })
+        }
       })
     })
 
