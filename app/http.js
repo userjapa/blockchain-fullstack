@@ -1,4 +1,5 @@
 const express = require('express'),
+      cors    = require('cors'),
       request = require('request')
 
 const Blockchain       = require('../blockchain'),
@@ -42,6 +43,11 @@ class HttpServer {
   setMiddlewares () {
     this.app.use(express.json())
     this.app.use(express.urlencoded({ extended: true }))
+    this.app.use(cors({
+      origin: '*',
+      methods: 'GET,POST',
+      allowedHeaders: [ 'Content-Type' ]
+    }))
   }
 
   setRoutes () {

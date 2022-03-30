@@ -19,6 +19,7 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "elliptic": "^6.5.4",
     "express": "^4.17.3",
