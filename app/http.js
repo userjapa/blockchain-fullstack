@@ -12,7 +12,7 @@ const Blockchain       = require('../blockchain'),
 const {
   HTTP_PORT,
   ROOT_ADDRESS,
-  GENERATE_PEER_PORT,
+  IS_NODE,
   RESPONSE_TYPES
 } = require('../config')
 
@@ -34,8 +34,7 @@ class HttpServer {
       pubsub: this.pubsub
     })
 
-    this.port            = HTTP_PORT
-    this.peerPort        = !GENERATE_PEER_PORT ? null : Math.ceil(Math.random() * 1000)
+    this.port = HTTP_PORT
 
     this.setMiddlewares()
     this.setRoutes()
@@ -169,13 +168,11 @@ class HttpServer {
   }
 
   listen () {
-    const PORT = this.peerPort || this.port
-
-    this.app.listen(PORT, () => {
-      console.log(`Running at port ${PORT}`)
+    this.app.listen(this.port, () => {
+      console.log(`Running at port ${this.port}`)
       this.pubsub.connect()
 
-      if (this.port !== PORT)
+      if (IS_NODE)
         this.syncWithRootState()
     })
   }

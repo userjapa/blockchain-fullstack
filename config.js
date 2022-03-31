@@ -2,7 +2,7 @@ const INITIAL_DIFFICULTY = process.env.INITIAL_DIFFICULTY || 3, // Integer
       MINE_RATE          = parseInt(process.env.MINE_RATE || 1000), // Milliseconds
       HTTP_PORT          = process.env.PORT || 3000,
       ROOT_ADDRESS       = process.env.ROOT_ADDRESS || `http://localhost:${HTTP_PORT}`,
-      GENERATE_PEER_PORT = process.env.GENERATE_PEER_PORT !== 'true' ? false : true,
+      IS_NODE            = process.env.IS_NODE !== 'true' ? false : true,
       REWARD_ADDRESS     = process.env.REWARD_ADDRESS || '*authorized-reward*',
       INITIAL_BALANCE    = 1000,
       MINING_REWARD      = 50
@@ -44,7 +44,7 @@ module.exports = {
   MINE_RATE,
   HTTP_PORT,
   ROOT_ADDRESS,
-  GENERATE_PEER_PORT,
+  IS_NODE,
   INITIAL_BALANCE,
   MINING_REWARD,
   REDIS_CONFIG,

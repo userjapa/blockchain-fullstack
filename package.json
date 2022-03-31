@@ -11,7 +11,7 @@
     "test": "jest --watchAll",
     "start": "node ./",
     "dev": "nodemon ./",
-    "dev:peer": "cross-env GENERATE_PEER_PORT='true' nodemon ./"
+    "dev:peer": "cross-env IS_NODE='true' PORT=3001 nodemon ./"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
