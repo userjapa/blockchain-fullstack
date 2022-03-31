@@ -153,6 +153,8 @@ class HttpServer {
         const rootChain = JSON.parse(body).data
 
         this.blockchain.replaceChain(rootChain)
+      } else {
+        console.log(error)
       }
     })
 
@@ -161,6 +163,8 @@ class HttpServer {
         const rootTransactionPoolMap = JSON.parse(body).data
 
         this.transactionPool.setMap(rootTransactionPoolMap)
+      } else {
+        console.log(error)
       }
     })
   }
@@ -169,8 +173,6 @@ class HttpServer {
     this.app.listen(this.port, () => {
       console.log(`Running at port ${this.port}`)
       this.pubsub.connect()
-
-      console.log(IS_NODE)
 
       if (IS_NODE)
         this.syncWithRootState()

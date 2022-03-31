@@ -9,6 +9,17 @@ class PubSub {
 
     this.publisher  = createClient(REDIS_CONFIG)
     this.subscriber = createClient(REDIS_CONFIG)
+
+    this.publisher.on('error', async () => {
+      console.log('publish error')
+      await this.publisher.quit()
+      await this.publisher.connect()
+    })
+    this.subscriber.on('error', async () => {
+      console.log('subscriber error')
+      await this.subscriber.quit()
+      await this.subscriber.connect()
+    })
   }
 
   async connect () {
@@ -30,8 +41,6 @@ class PubSub {
   }
 
   handleMessage ({ channel, message }) {
-    console.log(`Message received. Channel: ${channel}. Message: ${message}.`)
-
     const parsed = JSON.parse(message)
 
     switch (channel) {
