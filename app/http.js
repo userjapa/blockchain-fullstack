@@ -170,6 +170,8 @@ class HttpServer {
       console.log(`Running at port ${this.port}`)
       this.pubsub.connect()
 
+      console.log(IS_NODE)
+
       if (IS_NODE)
         this.syncWithRootState()
     })
