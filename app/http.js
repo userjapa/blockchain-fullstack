@@ -1,6 +1,7 @@
 const express = require('express'),
       cors    = require('cors'),
-      request = require('request')
+      request = require('request'),
+      path    = require('path')
 
 const Blockchain       = require('../blockchain'),
       Wallet           = require('../wallet'),
@@ -48,6 +49,8 @@ class HttpServer {
       methods: 'GET,POST',
       allowedHeaders: [ 'Content-Type' ]
     }))
+
+    this.app.use(express.static(path.join(__dirname, '../static')))
   }
 
   setRoutes () {
