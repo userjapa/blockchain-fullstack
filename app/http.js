@@ -38,6 +38,10 @@ class HttpServer {
 
     this.setMiddlewares()
     this.setRoutes()
+
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../static/index.html'))
+    })
   }
 
   setMiddlewares () {
@@ -106,8 +110,6 @@ class HttpServer {
 
       this.pubsub.broadcastTransaction(transaction)
 
-      console.log('transactionPool', this.transactionPool)
-
       res.json({
         type: RESPONSE_TYPES.SUCCESS,
         data: transaction
@@ -150,8 +152,6 @@ class HttpServer {
       if (!error && response.statusCode === 200) {
         const rootChain = JSON.parse(body).data
 
-        console.log('replace chain on a sync with', rootChain)
-
         this.blockchain.replaceChain(rootChain)
       }
     })
@@ -159,8 +159,6 @@ class HttpServer {
     request({ url: `${ROOT_ADDRESS}/api/transaction-pool-map` }, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         const rootTransactionPoolMap = JSON.parse(body).data
-
-        console.log('replace transaction pool map on a sync with', rootTransactionPoolMap)
 
         this.transactionPool.setMap(rootTransactionPoolMap)
       }
