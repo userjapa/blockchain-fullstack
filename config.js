@@ -1,6 +1,6 @@
 const INITIAL_DIFFICULTY = process.env.INITIAL_DIFFICULTY || 3, // Integer
       MINE_RATE          = parseInt(process.env.MINE_RATE || 1000), // Milliseconds
-      HTTP_PORT          = process.env.HTTP_PORT || 3000,
+      HTTP_PORT          = process.env.PORT || 3000,
       ROOT_ADDRESS       = `http://localhost:${HTTP_PORT}`,
       GENERATE_PEER_PORT = process.env.GENERATE_PEER_PORT !== 'true' ? false : true,
       INITIAL_BALANCE    = parseInt(process.env.INITIAL_BALANCE || 1000),
