@@ -1,11 +1,11 @@
 const INITIAL_DIFFICULTY = process.env.INITIAL_DIFFICULTY || 3, // Integer
       MINE_RATE          = parseInt(process.env.MINE_RATE || 1000), // Milliseconds
       HTTP_PORT          = process.env.PORT || 3000,
-      ROOT_ADDRESS       = `http://localhost:${HTTP_PORT}`,
+      ROOT_ADDRESS       = process.env.ROOT_ADDRESS || `http://localhost:${HTTP_PORT}`,
       GENERATE_PEER_PORT = process.env.GENERATE_PEER_PORT !== 'true' ? false : true,
-      INITIAL_BALANCE    = parseInt(process.env.INITIAL_BALANCE || 1000),
       REWARD_ADDRESS     = process.env.REWARD_ADDRESS || '*authorized-reward*',
-      MINING_REWARD      = parseInt(process.env.MINING_REWARD || 50)
+      INITIAL_BALANCE    = 1000,
+      MINING_REWARD      = 50
 
 const REDIS_CONFIG = {
   url: process.env.REDIS_URL || 'redis://:pb51de23ea9bbbf1cbe98ef011fbe0f07a1b8a1a7fa8d90eab113561d24fd9814@ec2-52-21-27-44.compute-1.amazonaws.com:20319',
